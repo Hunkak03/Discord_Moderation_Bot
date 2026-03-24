@@ -1,3 +1,7 @@
+# ─────────────────────────────────────────────
+# CONFIGURACIÓN
+# ─────────────────────────────────────────────
+
 import discord
 from discord.ext import commands
 from discord import app_commands
@@ -9,12 +13,16 @@ import sqlite3
 import json
 import re
 from datetime import datetime, timezone
+from dotenv import load_dotenv
+import os
 
-# ─────────────────────────────────────────────
-# CONFIGURACIÓN
-# ─────────────────────────────────────────────
-DISCORD_TOKEN = "MTQ4Mzk5NTA4ODk0NTE1NjEwNg.GAuklf.R3aNhwb1vR7XSzSb-S8ZKj9wUfHHi8U4nT0qVg"
-GROQ_API_KEY  = "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"
+load_dotenv()
+
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+GROQ_API_KEY  = os.getenv("GROQ_API_KEY")
+
+if not DISCORD_TOKEN or not GROQ_API_KEY:
+    raise ValueError("❌ Faltan variables de entorno. Revisa tu archivo .env")
 
 ROLE_HEAD_STAFF  = 1485050306751631512  # ← NUEVO
 ROLE_PROPIETARIO = 1484011451936145571
