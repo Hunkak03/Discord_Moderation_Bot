@@ -24,7 +24,7 @@ GROQ_API_KEY  = os.getenv("GROQ_API_KEY")
 if not DISCORD_TOKEN or not GROQ_API_KEY:
     raise ValueError("❌ Faltan variables de entorno. Revisa tu archivo .env")
 
-ROLE_HEAD_STAFF  = 1485050306751631512  # ← NUEVO
+ROLE_HEAD_STAFF  = 1485050306751631512
 ROLE_PROPIETARIO = 1484011451936145571
 ROLE_ADMIN       = 1388949033082683402
 ROLE_MODERADOR   = 1396472162113552464
@@ -731,8 +731,8 @@ async def on_ready():
         log.info(f"✅ Comandos sincronizados: {len(synced)}")
     except Exception as e:
         log.error(f"❌ Error sincronizando: {e}")
-    # Lanzar tarea de fondo para tempbans
-    bot.loop.create_task(tempban_checker())
+    # ✅ CORREGIDO: reemplaza bot.loop.create_task (deprecado) por asyncio.ensure_future
+    asyncio.ensure_future(tempban_checker())
     log.info("🤖 Jin Sakai Online | Multilingüe activo | SQLite activo | Head Staff activo")
 
 
@@ -1049,7 +1049,6 @@ async def avatar(ctx, member: discord.Member = None):
         colour=target.colour if target.colour != discord.Colour.default() else discord.Colour.blurple(),
         timestamp=datetime.now(timezone.utc),
     )
-    # Avatar del servidor (si tiene) + avatar global
     avatar_url = target.display_avatar.url
     embed.set_image(url=avatar_url)
     links = f"[PNG]({target.display_avatar.replace(format='png', size=4096).url}) | "
@@ -1796,7 +1795,6 @@ async def tempban(ctx, member: discord.Member, minutos: int, *, reason: str = "N
             discord.Colour.dark_orange(),
             {"Duración": f"{minutos} min", "Desbaneo": f"<t:{int(unban_at)}:R>"}
         )
-        # DM al usuario baneado
         try:
             dm_embed = discord.Embed(
                 title="⏳ Has sido baneado temporalmente",
@@ -1839,7 +1837,7 @@ async def unban(ctx, user_id: str, *, reason: str = "No especificado"):
     try:
         user = await bot.fetch_user(uid)
         await ctx.guild.unban(user, reason=reason)
-        db_remove_tempban(uid, ctx.guild.id)  # Limpia tempban si existía
+        db_remove_tempban(uid, ctx.guild.id)
         await log_mod_action(
             ctx.guild, "UNBAN", user, ctx.author, reason, discord.Colour.green()
         )
@@ -1913,7 +1911,7 @@ async def unlock(ctx, *, reason: str = "Lockdown finalizado"):
     try:
         await canal.set_permissions(
             ctx.guild.default_role,
-            send_messages=None,  # Restores to category/default inherited perms
+            send_messages=None,
             reason=f"Unlock por {ctx.author} — {reason}"
         )
         await log_mod_action(
@@ -1975,14 +1973,12 @@ async def poll(
     )
     embed.set_footer(text=f"Encuesta creada por {ctx.author.display_name} • Reacciona para votar")
 
-    # Enviar en el canal actual (no ephemeral para que todos vean)
     await ctx.defer()
     poll_msg = await ctx.channel.send(embed=embed)
 
     for i in range(len(opciones)):
         await poll_msg.add_reaction(emojis[i])
 
-    # Confirmar al autor
     try:
         await ctx.send(f"✅ Encuesta publicada: {poll_msg.jump_url}", ephemeral=True)
     except Exception:
