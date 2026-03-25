@@ -167,6 +167,23 @@ MUTE_DURACION = 10  # Minutos de mute automático
 
 ---
 
+## ⚙️ Configuration
+
+Edit the following variables at the beggining of `mybot.py`:
+
+```python
+CANAL_LOGS       = ID_del_canal_de_logs
+CANAL_BIENVENIDA = ID_del_canal_de_bienvenida
+CANAL_TICKETS    = ID_del_canal_de_tickets
+
+MAX_REPORTES  = 5   # Reportes para alertar al staff
+SPAM_MENSAJES = 5   # Mensajes en X segundos = spam
+SPAM_SEGUNDOS = 5
+MUTE_DURACION = 10  # Minutos de mute automático
+```
+
+---
+
 <div align="center">
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer" width="100%"/>
