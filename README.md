@@ -100,6 +100,8 @@ MAX_REPORTES  = 5   # Reportes para alertar al staff
 SPAM_MENSAJES = 5   # Mensajes en X segundos = spam
 SPAM_SEGUNDOS = 5
 MUTE_DURACION = 10  # Minutos de mute automático
+
+IMPORTANTE: CAMBIA TODOS LOS IDS QUE ENCUENTRES CON LOS DE TU SERVER (Roles, Canales...)
 ```
 
 ---
@@ -180,6 +182,8 @@ MAX_REPORTES  = 5   # Reportes para alertar al staff
 SPAM_MENSAJES = 5   # Mensajes en X segundos = spam
 SPAM_SEGUNDOS = 5
 MUTE_DURACION = 10  # Minutos de mute automático
+
+IMPORTANT: CHANGE ANY IDS YOU SEE WITH YOURS FROM YOUR SERVER (Roles IDS, Channels ID...ect)
 ```
 
 ---
