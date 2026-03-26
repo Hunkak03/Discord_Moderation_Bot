@@ -275,6 +275,25 @@ python mybot.py
 
 ---
 
+## ⚙️ Configuration
+
+Please edit the following constants at the beginning of  `mybot.py`:
+
+```python
+- **LOG_CHANNEL_ID** = ID of the log channel  
+- **WELCOME_CHANNEL_ID** = ID of the welcome channel  
+- **TICKET_CHANNEL_ID** = ID of the ticket channel  
+
+- **MAX_REPORTS** = 5  # Number of reports to alert the staff  
+- **SPAM_MESSAGES_LIMIT** = 5  # Number of messages within a specified time frame considered as spam  
+- **SPAM_TIME_FRAME** = 5 seconds  
+- **MUTE_DURATION** = 10 minutes  # Duration of automatic mute  
+
+**Note:** Please ensure to replace any IDs with the corresponding ones from your server (such as roles, channels, etc.)
+```
+
+---
+
 ## 📁 Project Structure
 
 ```
